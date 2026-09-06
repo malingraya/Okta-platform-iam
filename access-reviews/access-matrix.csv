@@ -1,0 +1,6 @@
+User,Department,Role,Permissions
+Alice HR,HR,HR Analyst,"read:profile;read:hr"
+Rahul Finance,Finance,Finance Analyst,"read:profile;read:finance"
+Priya IT,IT,IAM Analyst,"read:profile;read:users;read:hr"
+John Sales,Sales,Sales Analyst,"read:profile"
+IAM Administrator,IAM,IAM Administrator,"read:profile;read:users;write:users;admin:access"
