@@ -1,0 +1,54 @@
+import os
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
+domain = os.getenv("AUTH0_DOMAIN")
+client_id = os.getenv("AUTH0_MGMT_CLIENT_ID")
+client_secret = os.getenv("AUTH0_MGMT_CLIENT_SECRET")
+
+# Get Management API token
+token_url = f"https://{domain}/oauth/token"
+
+payload = {
+    "client_id": client_id,
+    "client_secret": client_secret,
+    "audience": f"https://{domain}/api/v2/",
+    "grant_type": "client_credentials"
+}
+
+token_response = requests.post(token_url, json=payload)
+
+if token_response.status_code != 200:
+    print("❌ Failed to get Management API token")
+    print(token_response.text)
+    exit()
+
+access_token = token_response.json()["access_token"]
+
+# Call Auth0 Management API
+users_url = f"https://{domain}/api/v2/users"
+
+headers = {
+    "Authorization": f"Bearer {access_token}"
+}
+
+users_response = requests.get(users_url, headers=headers)
+
+if users_response.status_code == 200:
+    users = users_response.json()
+
+    print("✅ read:users permission working")
+    print(f"✅ Users returned: {len(users)}")
+
+    for user in users:
+        print(
+            f"Email: {user.get('email')} | "
+            f"User ID: {user.get('user_id')}"
+        )
+
+else:
+    print("❌ Failed to read users")
+    print(f"Status Code: {users_response.status_code}")
+    print(users_response.text)

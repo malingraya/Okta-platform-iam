@@ -1,0 +1,18 @@
+User Type,API Scope,Endpoint,Expected Decision
+HR,read:employees,GET /api/employees,ALLOW
+HR,update:employees,PATCH /api/employees/{id},ALLOW
+HR,read:transactions,GET /api/transactions,DENY
+HR,read:systems,GET /api/systems,DENY
+Finance,read:transactions,GET /api/transactions,ALLOW
+Finance,read:employees,GET /api/employees,DENY
+Finance,read:systems,GET /api/systems,DENY
+IT,read:systems,GET /api/systems,ALLOW
+IT,update:systems,PATCH /api/systems/{id},ALLOW
+IT,read:transactions,GET /api/transactions,DENY
+IT,read:employees,GET /api/employees,DENY
+Sales,read:reports,GET /api/reports,ALLOW
+Sales,read:employees,GET /api/employees,DENY
+Sales,read:transactions,GET /api/transactions,DENY
+IAM Admin,read:users,GET /api/users,ALLOW
+IAM Admin,manage:access,PATCH /api/access/{id},ALLOW
+IAM Admin,read:employees,GET /api/employees,DENY
